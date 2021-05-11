@@ -1,0 +1,32 @@
+<div class="row">
+    <div *ngFor="let gif of resultados | paginate : {
+        itemsPerPage: pageSize,
+        currentPage: page,
+        totalItems: total
+    }" class="col-md-4 col-sm-6">
+        <div class="card animate__animated animate__fadeIn">
+            <img [src]="gif.images.downsized_medium.url" alt="{{gif.title}}" class="card-img-top">
+            <div class="card-body">
+                <p class="card-text">
+                    {{gif.title}}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12 col-md-5 mt-3 pagination-showing">     
+        Mostrando {{showing}} a {{showingTotal}} de {{total}} entradas
+    </div>
+    <div class="col-sm-12 col-md-7 mt-3">
+        <pagination-controls
+            (pageChange)="onTableDataChange($event)"
+            (pageBoundsCorrection)="onTableDataChange($event)"
+            directionLinks="true"
+            autoHide="false"
+            responsive="true"
+            previousLabel=""
+            nextLabel="">
+        </pagination-controls>
+    </div>
+</div>   
