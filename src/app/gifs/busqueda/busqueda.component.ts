@@ -21,8 +21,9 @@ export class BusquedaComponent implements OnInit {
     if (value.trim().length == 0) {
       return;
     }
-
-    this.gifsService.searchGifs(value);
+    
+    this.gifsService.setSearch(value);
+    this.gifsService.searchGifs();
     this.txtBuscar.nativeElement.value = '';
   }
 

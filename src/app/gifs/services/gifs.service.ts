@@ -11,6 +11,9 @@ const apiKey = environment.apiKey;
 })
 export class GifsService {
   private _historial: string[] = [];
+  private _page: number = 1;
+  private _limit: number = 10;
+  private _search: string = '';
   public resultados: Data[] = [];
 
   constructor(private http: HttpClient) { 
@@ -25,8 +28,32 @@ export class GifsService {
     return [...this._historial];
   }
 
-  searchGifs(value: string, limit?: number, offset?: number) {
-     value = value.trim().toLowerCase();
+  get page() {
+    return this._limit;
+  }
+
+  get limit() {
+    return this._limit;
+  }
+
+  get offset() {
+    return (this._page - 1) * this._limit;
+  }
+
+  setPage(page: number) {
+    this._page = page;
+  }
+
+  setLimit(limit: number) {
+    this._limit = limit;
+  }
+
+  setSearch(search: string) {
+    this._search = search;
+  }
+
+  searchGifs() {
+     const value = this._search.trim().toLowerCase();
 
     if (!this._historial.includes(value)) {
       this._historial.unshift(value);
@@ -41,8 +68,8 @@ export class GifsService {
     const params = new HttpParams()
       .set('api_key', apiKey)
       .set('q', value)
-      .set('offset', '1')
-      .set('limit', '20');
+      .set('offset', this.offset.toString())
+      .set('limit', this.limit.toString());
 
     this.http.get<Gifs>('https://api.giphy.com/v1/gifs/search', {headers: headers, params: params})
       .subscribe((response) => {

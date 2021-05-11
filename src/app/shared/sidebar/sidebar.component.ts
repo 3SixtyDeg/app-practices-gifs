@@ -18,7 +18,8 @@ export class SidebarComponent implements OnInit {
   }
 
   buscar(value: string) {
-    this.gifsService.searchGifs(value);
+    this.gifsService.setSearch(value);
+    this.gifsService.searchGifs();
   }
 
 }

@@ -9,8 +9,6 @@ import { Data } from '../interfaces/gifts.interfaces';
   ]
 })
 export class ResultadosComponent implements OnInit {
-  public page = 1;
-  public pageSize = 10;
   public total = 100;
   public showing = 0;
   public showingTotal = 0;
@@ -25,13 +23,25 @@ export class ResultadosComponent implements OnInit {
   }
 
   onTableDataChange(page: number) {
-    this.page = page;
+    this.gifsService.setPage(page);
+    this.gifsService.setLimit(10);
     localStorage.setItem('_p', page.toString());
+    this.gifsService.searchGifs();
   }  
 
   onTableSizeChange(): void {
-    this.page = 1;
+    this.gifsService.setPage(1);
+    this.gifsService.setLimit(10);
     localStorage.setItem('_p', '1');
+    this.gifsService.searchGifs();
   } 
+
+  get page(): number {
+    return this.gifsService.page;
+  }
+
+  get limit(): number {
+    return this.gifsService.limit;
+  }
 
 }
