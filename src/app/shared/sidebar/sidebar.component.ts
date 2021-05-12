@@ -8,6 +8,7 @@ import { GifsService } from '../../gifs/services/gifs.service';
   ]
 })
 export class SidebarComponent implements OnInit {
+
   constructor(private gifsService: GifsService) { }
 
   ngOnInit(): void {
@@ -18,6 +19,7 @@ export class SidebarComponent implements OnInit {
   }
 
   buscar(value: string) {
+    this.gifsService.setPage(1);
     this.gifsService.setSearch(value);
     this.gifsService.searchGifs();
   }

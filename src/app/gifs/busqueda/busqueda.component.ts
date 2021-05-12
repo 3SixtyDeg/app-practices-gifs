@@ -9,6 +9,7 @@ import { GifsService } from '../services/gifs.service';
 })
 export class BusquedaComponent implements OnInit {
   @ViewChild('txtBuscar') txtBuscar!:ElementRef<HTMLInputElement>;
+  @ViewChild('selectSize') selectSize!:ElementRef<HTMLInputElement>;
 
   constructor(private gifsService: GifsService) { }
 
@@ -22,9 +23,18 @@ export class BusquedaComponent implements OnInit {
       return;
     }
     
+    this.gifsService.setPage(1);
     this.gifsService.setSearch(value);
     this.gifsService.searchGifs();
     this.txtBuscar.nativeElement.value = '';
   }
+
+  onSizeChange(): void {
+    const value = Number(this.selectSize.nativeElement.value) || 10;
+    console.log(value);
+    this.gifsService.setPage(1);
+    this.gifsService.setLimit(value);
+    this.gifsService.searchGifs();
+  } 
 
 }

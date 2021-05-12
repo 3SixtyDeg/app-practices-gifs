@@ -9,9 +9,7 @@ import { Data } from '../interfaces/gifts.interfaces';
   ]
 })
 export class ResultadosComponent implements OnInit {
-  public total = 100;
-  public showing = 0;
-  public showingTotal = 0;
+  public loading: boolean = false;
 
   constructor(private gifsService: GifsService) { }
 
@@ -22,20 +20,6 @@ export class ResultadosComponent implements OnInit {
     return this.gifsService.resultados;
   }
 
-  onTableDataChange(page: number) {
-    this.gifsService.setPage(page);
-    this.gifsService.setLimit(10);
-    localStorage.setItem('_p', page.toString());
-    this.gifsService.searchGifs();
-  }  
-
-  onTableSizeChange(): void {
-    this.gifsService.setPage(1);
-    this.gifsService.setLimit(10);
-    localStorage.setItem('_p', '1');
-    this.gifsService.searchGifs();
-  } 
-
   get page(): number {
     return this.gifsService.page;
   }
@@ -43,5 +27,27 @@ export class ResultadosComponent implements OnInit {
   get limit(): number {
     return this.gifsService.limit;
   }
+
+  get total(): number {
+    return this.gifsService.total;
+  }
+
+  get offset(): number {
+    return this.gifsService.offset;
+  }
+
+  get showing(): number {
+    return (this.total > 0) ? (this.offset + 1) : this.offset;
+  }
+
+  get showingTotal(): number {
+    return (this.offset + this.resultados.length);
+  }
+
+  onDataChange(page: number) {
+    this.loading = true;
+    this.gifsService.setPage(page);
+    this.gifsService.searchGifs();
+  }  
 
 }

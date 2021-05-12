@@ -13,6 +13,7 @@ export class GifsService {
   private _historial: string[] = [];
   private _page: number = 1;
   private _limit: number = 10;
+  private _total: number = 0;
   private _search: string = '';
   public resultados: Data[] = [];
 
@@ -22,6 +23,18 @@ export class GifsService {
       this._historial = JSON.parse(localStorage.getItem('_h')!) || [];
     }
 
+    if (localStorage.getItem('_p')) {
+      this._page = Number(localStorage.getItem('_p')) || 1;
+    }
+
+    if (localStorage.getItem('_l')) {
+      this._limit = Number(localStorage.getItem('_l')) || 10;
+    }
+
+    if (localStorage.getItem('_s')) {
+      this._search = localStorage.getItem('_s') || '';
+    }
+
   }
 
   get historial() {
@@ -29,7 +42,7 @@ export class GifsService {
   }
 
   get page() {
-    return this._limit;
+    return this._page;
   }
 
   get limit() {
@@ -40,16 +53,27 @@ export class GifsService {
     return (this._page - 1) * this._limit;
   }
 
+  get total() {
+    return this._total;
+  }
+
   setPage(page: number) {
     this._page = page;
+    localStorage.setItem('_p', this._page.toString());
   }
 
   setLimit(limit: number) {
     this._limit = limit;
+    localStorage.setItem('_l', this._limit.toString());
   }
 
   setSearch(search: string) {
     this._search = search;
+    localStorage.setItem('_s', this._search);
+  }
+
+  setTotal(total: number) {
+    this._total = total;
   }
 
   searchGifs() {
@@ -73,6 +97,7 @@ export class GifsService {
 
     this.http.get<Gifs>('https://api.giphy.com/v1/gifs/search', {headers: headers, params: params})
       .subscribe((response) => {
+        this.setTotal(response.pagination.total_count);
         this.resultados = response.data;
     });
   }

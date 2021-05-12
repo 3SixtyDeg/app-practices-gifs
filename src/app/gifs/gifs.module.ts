@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { GifsPageComponent } from './gifs-page/gifs-page.component';
@@ -15,6 +16,7 @@ import { ResultadosComponent } from './resultados/resultados.component';
   ],
   imports: [
     CommonModule,
+    BrowserModule,
     NgxPaginationModule
   ],
   exports: [
