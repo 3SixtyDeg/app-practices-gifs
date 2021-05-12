@@ -12,7 +12,7 @@ const apiKey = environment.apiKey;
 export class GifsService {
   private _historial: string[] = [];
   private _page: number = 1;
-  private _limit: number = 10;
+  private _limit: number = 12;
   private _total: number = 0;
   private _search: string = '';
   public resultados: Data[] = [];
@@ -28,7 +28,7 @@ export class GifsService {
     }
 
     if (localStorage.getItem('_l')) {
-      this._limit = Number(localStorage.getItem('_l')) || 10;
+      this._limit = Number(localStorage.getItem('_l')) || 12;
     }
 
     if (localStorage.getItem('_s')) {
@@ -99,6 +99,8 @@ export class GifsService {
       .subscribe((response) => {
         this.setTotal(response.pagination.total_count);
         this.resultados = response.data;
+
+        console.log(this.resultados);
     });
   }
 
