@@ -110,8 +110,6 @@ export class GifsService {
       .subscribe((response) => {
         this.setTotal(response.pagination.total_count);
         this.resultados = response.data;
-
-        console.log(this.resultados);
     });
   }
 
