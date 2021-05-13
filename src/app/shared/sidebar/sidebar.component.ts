@@ -24,4 +24,8 @@ export class SidebarComponent implements OnInit {
     this.gifsService.searchGifs();
   }
 
+  delete(index: number, item: string) {
+    this.gifsService.deleteHistorial(index, item);
+  }
+
 }

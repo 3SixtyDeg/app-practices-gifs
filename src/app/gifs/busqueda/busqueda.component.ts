@@ -14,6 +14,15 @@ export class BusquedaComponent implements OnInit {
   constructor(private gifsService: GifsService) { }
 
   ngOnInit(): void {
+    
+    if (localStorage.getItem('_s')) {
+      this.gifsService.searchGifs();
+    }
+
+  }
+
+  ngAfterViewInit() {
+    this.selectSize.nativeElement.value = this.gifsService.limit.toString();
   }
 
   buscar() {
@@ -31,7 +40,6 @@ export class BusquedaComponent implements OnInit {
 
   onSizeChange(): void {
     const value = Number(this.selectSize.nativeElement.value) || 10;
-    console.log(value);
     this.gifsService.setPage(1);
     this.gifsService.setLimit(value);
     this.gifsService.searchGifs();

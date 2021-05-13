@@ -76,6 +76,17 @@ export class GifsService {
     this._total = total;
   }
 
+  deleteHistorial(index: number, item: string) {
+    const value = item.trim().toLowerCase();
+
+    if (this._historial.includes(value)) {
+      localStorage.removeItem('_s');
+    }
+
+    this._historial.splice(index, 1);
+    localStorage.setItem('_h', JSON.stringify(this._historial));
+  }
+
   searchGifs() {
      const value = this._search.trim().toLowerCase();
 

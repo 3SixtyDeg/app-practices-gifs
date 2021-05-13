@@ -9,7 +9,7 @@ html, body {
 }
 
 .pagination-showing {
-    text-align: left;
+    text-align: center;
 }
 
 .sel-filter-pz {
@@ -19,6 +19,10 @@ html, body {
 
 .full-w {
     width: 100% !important;
+}
+
+.cursor-pointer{
+    cursor: pointer;
 }
 
 @media (max-width: 576px) {
