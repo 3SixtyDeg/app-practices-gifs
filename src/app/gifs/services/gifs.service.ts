@@ -10,73 +10,26 @@ const apiKey = environment.apiKey;
   providedIn: 'root'
 })
 export class GifsService {
+  private apiUrl: string = environment.apiUrl;
   private _historial: string[] = [];
-  private _page: number = 1;
-  private _limit: number = 12;
-  private _total: number = 0;
-  private _search: string = '';
   public resultados: Data[] = [];
+  public totalCount: number = 0;
+  public count: number = 0;
+  public termino: string = '';
 
   constructor(private http: HttpClient) { 
 
     if (localStorage.getItem('_h')) {
       this._historial = JSON.parse(localStorage.getItem('_h')!) || [];
     }
-
-    if (localStorage.getItem('_p')) {
-      this._page = Number(localStorage.getItem('_p')) || 1;
-    }
-
-    if (localStorage.getItem('_l')) {
-      this._limit = Number(localStorage.getItem('_l')) || 12;
-    }
-
-    if (localStorage.getItem('_s')) {
-      this._search = localStorage.getItem('_s') || '';
-    }
-
+    
   }
 
-  get historial() {
+  public get historial() {
     return [...this._historial];
   }
 
-  get page() {
-    return this._page;
-  }
-
-  get limit() {
-    return this._limit;
-  }
-
-  get offset() {
-    return (this._page - 1) * this._limit;
-  }
-
-  get total() {
-    return this._total;
-  }
-
-  setPage(page: number) {
-    this._page = page;
-    localStorage.setItem('_p', this._page.toString());
-  }
-
-  setLimit(limit: number) {
-    this._limit = limit;
-    localStorage.setItem('_l', this._limit.toString());
-  }
-
-  setSearch(search: string) {
-    this._search = search;
-    localStorage.setItem('_s', this._search);
-  }
-
-  setTotal(total: number) {
-    this._total = total;
-  }
-
-  deleteHistorial(index: number, item: string) {
+  public deleteHistorial(index: number, item: string) {
     const value = item.trim().toLowerCase();
 
     if (this._historial.includes(value)) {
@@ -87,11 +40,11 @@ export class GifsService {
     localStorage.setItem('_h', JSON.stringify(this._historial));
   }
 
-  searchGifs() {
-     const value = this._search.trim().toLowerCase();
+  public getGifs(termino: string, limit: number, offset: number) {
+    this.termino = termino;
 
-    if (!this._historial.includes(value)) {
-      this._historial.unshift(value);
+    if (!this._historial.includes(termino)) {
+      this._historial.unshift(termino);
       this._historial = this._historial.splice(0, 10);
       localStorage.setItem('_h', JSON.stringify(this._historial));
     }
@@ -102,15 +55,19 @@ export class GifsService {
 
     const params = new HttpParams()
       .set('api_key', apiKey)
-      .set('q', value)
-      .set('offset', this.offset.toString())
-      .set('limit', this.limit.toString());
+      .set('q', termino)
+      .set('offset', offset.toString())
+      .set('limit', limit.toString());
 
-    this.http.get<Gifs>('https://api.giphy.com/v1/gifs/search', {headers: headers, params: params})
+    this.http.get<Gifs>(this.apiUrl, {headers: headers, params: params})
       .subscribe((response) => {
-        this.setTotal(response.pagination.total_count);
         this.resultados = response.data;
-    });
+        this.totalCount = response.pagination.total_count;
+        this.count = response.pagination.count;
+      }, (error) => {
+        this.resultados = [];
+      });
+
   }
 
 }

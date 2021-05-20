@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { GifsService } from '../../gifs/services/gifs.service';
 
+
+
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -8,24 +10,28 @@ import { GifsService } from '../../gifs/services/gifs.service';
   ]
 })
 export class SidebarComponent implements OnInit {
+  private limit: number = 12;
+  private page: number = 1;
 
   constructor(private gifsService: GifsService) { }
 
   ngOnInit(): void {
   }
 
-  get historial() {
+  public get historial() {
     return this.gifsService.historial;
   }
 
-  buscar(value: string) {
-    this.gifsService.setPage(1);
-    this.gifsService.setSearch(value);
-    this.gifsService.searchGifs();
+  private get offset() {
+    return (this.page - 1) * this.limit;
   }
 
-  delete(index: number, item: string) {
+  public delete(index: number, item: string) {
     this.gifsService.deleteHistorial(index, item);
+  }
+
+  public buscar(termino: string) {
+    this.gifsService.getGifs(termino, this.limit, this.offset);
   }
 
 }

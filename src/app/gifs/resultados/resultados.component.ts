@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Gifs } from '../interfaces/gifts.interfaces';
 import { GifsService } from '../services/gifs.service';
-import { Data } from '../interfaces/gifts.interfaces';
+
+
 
 @Component({
   selector: 'app-resultados',
@@ -9,45 +11,38 @@ import { Data } from '../interfaces/gifts.interfaces';
   ]
 })
 export class ResultadosComponent implements OnInit {
-  public loading: boolean = false;
+  @Input() limit!: number;
+  @Input() page!: number;
+  @Input() offset!: number;
+  @Output() pageEmit: EventEmitter<number> = new EventEmitter();
 
   constructor(private gifsService: GifsService) { }
 
   ngOnInit(): void {
   }
 
-  get resultados(): Data[] {
+  get gifs() {
     return this.gifsService.resultados;
   }
 
-  get page(): number {
-    return this.gifsService.page;
+  get totalCount() {
+    return this.gifsService.totalCount;
   }
 
-  get limit(): number {
-    return this.gifsService.limit;
-  }
-
-  get total(): number {
-    return this.gifsService.total;
-  }
-
-  get offset(): number {
-    return this.gifsService.offset;
+  get count() {
+    return this.gifsService.count;
   }
 
   get showing(): number {
-    return (this.total > 0) ? (this.offset + 1) : this.offset;
+    return (this.totalCount > 0) ? (this.offset + 1) : this.offset;
   }
 
   get showingTotal(): number {
-    return (this.offset + this.resultados.length);
+    return (this.offset + this.count);
   }
 
-  onDataChange(page: number) {
-    this.loading = true;
-    this.gifsService.setPage(page);
-    this.gifsService.searchGifs();
-  }  
+  public onDataChange(page: number) {
+    this.pageEmit.emit(page);
+  }
 
 }

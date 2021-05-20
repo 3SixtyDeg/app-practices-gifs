@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiKey: 'FOn6DXKWY5TuRMuy8AsaoyZfxlBlMIe8'
+  apiKey: 'FOn6DXKWY5TuRMuy8AsaoyZfxlBlMIe8',
+  apiUrl: 'https://api.giphy.com/v1/gifs/search'
 };
 
 /*
@@ -14,4 +15,4 @@ export const environment = {
  * This import should be commented out in production mode because it will have a negative impact
  * on performance if an error is thrown.
  */
-// import 'zone.js/dist/zone-error';  // Included with Angular CLI.
+// import 'zone.js/plugins/zone-error';  // Included with Angular CLI.

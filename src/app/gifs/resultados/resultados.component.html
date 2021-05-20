@@ -1,8 +1,8 @@
-<div class="row row-cols-1 row-cols-md-3 g-4">
-    <div class="col animate__animated animate__fadeIn" *ngFor="let gif of resultados | paginate : {
+<div class="row row-cols-1 row-cols-md-3 g-4" *ngIf="gifs">
+    <div class="col animate__animated animate__fadeIn" *ngFor="let gif of gifs | paginate : {
         itemsPerPage: limit,
         currentPage: page,
-        totalItems: total}">
+        totalItems: totalCount}">
         <div class="card h-100">
         <img [src]="gif.images.downsized_medium.url" class="card-img-top" alt="{{gif.title}}">
         <div class="card-body">
@@ -14,9 +14,9 @@
         </div>
     </div>
 </div>
-<div class="row">
+<div class="row" *ngIf="gifs && gifs.length > 0">
     <div class="col-sm-12 col-md-5 mt-3 pagination-showing">     
-        Mostrando {{showing}} a {{showingTotal}} de {{total}} entradas
+        Mostrando {{showing}} a {{showingTotal}} de {{totalCount}} entradas
     </div>
     <div class="col-sm-12 col-md-7 mt-3 text-center">
             <pagination-controls 

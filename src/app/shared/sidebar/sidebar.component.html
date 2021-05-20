@@ -1,13 +1,35 @@
-<div class="bg-dark border-right p-3" id="sidebar">
-    <h4 class="text-light text-center">Historial</h4>
-    <hr class="text-white"/>
-    
-    <ul class="list-group">
-      <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center cursor-pointer" 
-      (click)="buscar(item)"
-      *ngFor="let item of historial; let i = index">
-        {{item | titlecase}}
-        <i class="bi bi-trash-fill cursor-pointer" (click)="delete(i, item)"></i>
+<div class="offcanvas offcanvas-start offcanvas-dark bg-dark text-white" tabindex="-1" id="offcanvasWithBackdrop" aria-labelledby="offcanvasWithBackdropLabel">
+  <div class="offcanvas-header">
+    <a href="#" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+      <i class="bi bi-clock-history fs-3"></i>
+      <span class="fs-4 ms-2">Historial de Busqueda</span>
+    </a>
+    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <hr>
+    <ul class="nav nav-pills flex-column mb-auto">
+      <li>
+        <div class="nav-link text-white active mb-2" aria-current="page" 
+          *ngFor="let item of historial; let i = index">
+          <i class="bi bi-bookmark-fill"></i>
+          <span class="fs-5 ms-2">
+            <a class="cursor-pointer text-white" 
+              (click)="buscar(item)" data-bs-dismiss="offcanvas">{{item | titlecase}}</a>
+          </span>
+          <a href="#" (click)="delete(i, item)">
+            <i class="bi bi-x-lg text-white float-end mt-1"></i>
+          </a>
+        </div>
+      </li>
+      <li *ngIf="historial.length === 0">
+        <div class="nav-link text-white active mb-2" aria-current="page">
+          <i class="bi bi-emoji-frown-fill"></i>
+          <span class="fs-5 ms-2">
+            Sin resultados
+          </span>
+        </div>
       </li>
     </ul>
   </div>
+</div>

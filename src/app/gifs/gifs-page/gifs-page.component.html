@@ -1,11 +1,19 @@
 <div class="row p-3">
     <div class="col">
-        <app-busqueda></app-busqueda>
+        <app-busqueda 
+            (searchEmit)="setSearch($event)" 
+            (sizeEmit)="setSize($event)">
+        </app-busqueda>
     </div>
 </div>
 <hr/>
 <div class="row">
     <div class="col">
-        <app-resultados></app-resultados>
+        <app-resultados 
+            [limit]="limit" 
+            [page]="page"
+            [offset]="offset"
+            (pageEmit)="setPage($event)">
+        </app-resultados>
     </div>
 </div>

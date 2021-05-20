@@ -12,9 +12,9 @@
     <div class="col-sm-12 col-md-8">
         <div class="form-inline i-float-right">
             <div class="form-group full-w">
-                <label for="buscarPerfil" class="mx-sm-3">Buscar</label>
-                <input type="text" class="form-control" placeholder="Buscar..."
-                maxlength="12" (keyup.enter)="buscar()" #txtBuscar>
+                <label for="buscar" class="mx-sm-3">Buscar</label>
+                <input type="text" id="buscar" class="form-control" placeholder="Buscar..."
+                (keyup.enter)="onSearch()" #txtBuscar>
             </div>
         </div>
     </div>

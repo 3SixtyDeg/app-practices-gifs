@@ -1,5 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { GifsService } from '../services/gifs.service';
+import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-busqueda',
@@ -8,41 +7,31 @@ import { GifsService } from '../services/gifs.service';
   ]
 })
 export class BusquedaComponent implements OnInit {
+  @Output() sizeEmit: EventEmitter<number> = new EventEmitter();
+  @Output() searchEmit: EventEmitter<string> = new EventEmitter();
+
   @ViewChild('txtBuscar') txtBuscar!:ElementRef<HTMLInputElement>;
   @ViewChild('selectSize') selectSize!:ElementRef<HTMLInputElement>;
 
-  constructor(private gifsService: GifsService) { }
+  constructor() { }
 
   ngOnInit(): void {
-    
-    if (localStorage.getItem('_s')) {
-      this.gifsService.searchGifs();
-    }
-
   }
 
-  ngAfterViewInit() {
-    this.selectSize.nativeElement.value = this.gifsService.limit.toString();
-  }
-
-  buscar() {
+  public onSearch() {
     const value = this.txtBuscar.nativeElement.value;
 
     if (value.trim().length == 0) {
       return;
     }
     
-    this.gifsService.setPage(1);
-    this.gifsService.setSearch(value);
-    this.gifsService.searchGifs();
+    this.searchEmit.emit(value);
     this.txtBuscar.nativeElement.value = '';
   }
 
-  onSizeChange(): void {
-    const value = Number(this.selectSize.nativeElement.value) || 10;
-    this.gifsService.setPage(1);
-    this.gifsService.setLimit(value);
-    this.gifsService.searchGifs();
+  public onSizeChange(): void {
+    const value = Number(this.selectSize.nativeElement.value) || 12;
+    this.sizeEmit.emit(value);
   } 
 
 }
