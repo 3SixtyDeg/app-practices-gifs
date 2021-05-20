@@ -29,6 +29,10 @@ export class GifsService {
     return [...this._historial];
   }
 
+  public setTermino(termino: string) {
+    this.termino = termino;
+  }
+
   public deleteHistorial(index: number, item: string) {
     const value = item.trim().toLowerCase();
 
@@ -40,11 +44,10 @@ export class GifsService {
     localStorage.setItem('_h', JSON.stringify(this._historial));
   }
 
-  public getGifs(termino: string, limit: number, offset: number) {
-    this.termino = termino;
+  public getGifs(limit: number, offset: number) {
 
-    if (!this._historial.includes(termino)) {
-      this._historial.unshift(termino);
+    if (!this._historial.includes(this.termino)) {
+      this._historial.unshift(this.termino);
       this._historial = this._historial.splice(0, 10);
       localStorage.setItem('_h', JSON.stringify(this._historial));
     }
@@ -55,7 +58,7 @@ export class GifsService {
 
     const params = new HttpParams()
       .set('api_key', apiKey)
-      .set('q', termino)
+      .set('q', this.termino)
       .set('offset', offset.toString())
       .set('limit', limit.toString());
 

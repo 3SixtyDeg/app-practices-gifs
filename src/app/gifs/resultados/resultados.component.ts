@@ -21,23 +21,23 @@ export class ResultadosComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  get gifs() {
+  public get gifs() {
     return this.gifsService.resultados;
   }
 
-  get totalCount() {
+  public get totalCount() {
     return this.gifsService.totalCount;
   }
 
-  get count() {
+  private get count() {
     return this.gifsService.count;
   }
 
-  get showing(): number {
+  public get showing(): number {
     return (this.totalCount > 0) ? (this.offset + 1) : this.offset;
   }
 
-  get showingTotal(): number {
+  public get showingTotal(): number {
     return (this.offset + this.count);
   }
 
