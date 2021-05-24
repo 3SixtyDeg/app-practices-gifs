@@ -35,7 +35,7 @@ _Estas instrucciones te permitirán obtener una copia del proyecto en funcionami
 git clone https://github.com/magranadosb/app-practices-gifs.git
 ```
 
-_Después de clonar el proyecto, ingresa a la carpeta creada app-practices-paises._
+_Después de clonar el proyecto, ingresa a la carpeta creada app-practices-gifs._
 
 ```
 npm install
