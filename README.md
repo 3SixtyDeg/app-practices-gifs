@@ -42,7 +42,7 @@
     </li>
     <li><a href="#despliegue">📦 Despliegue</a></li>
     <li><a href="#versionado">📌 Versionado</a></li>
-    <li><a href="#contribuidores">✒️ Contribui    <li><a href="#contribuyentes">✒️ Contribuyentes</a></li>
+    <li><a href="#contribuyentes">✒️ Contribuyentes</a></li>
     <li><a href="#licencia">📄 Licencia</a></li>
   </ol>
 </details>

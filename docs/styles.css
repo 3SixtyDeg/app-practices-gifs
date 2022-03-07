@@ -1,0 +1,43 @@
+html, body {
+    height: 100%;;
+}
+
+.pagination-showing {
+    text-align: center;
+}
+
+.sel-filter-pz {
+    width: auto;
+    display: inline-block;
+}
+
+.full-w {
+    width: 100% !important;
+}
+
+.cursor-pointer{
+    cursor: pointer;
+}
+
+.bc-li {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 2;
+    padding: 1.25rem 1rem;
+}
+
+@media (max-width: 576px) {
+
+    .i-float-right {
+        float: left !important;
+        width: 100%;
+    }
+
+    .col-c {
+        text-align: center;
+    }
+
+}
+
+/*# sourceMappingURL=styles.css.map*/
